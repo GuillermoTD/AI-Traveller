@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+.Hero {
+  @apply bg-red-200;
+}

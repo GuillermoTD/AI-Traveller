@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+.Navbar {
+  @apply h-[3.5rem] flex items-center justify-between px-[2rem];
+}

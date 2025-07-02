@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color1: #f56551;
+}
+
+.btn-black {
+  @apply text-white px-[2rem] py-[0.5rem] bg-slate-900 rounded-[5px] cursor-pointer;
+}
