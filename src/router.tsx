@@ -1,9 +1,9 @@
 // src/routes.ts
-import { Outlet, createBrowserRouter } from 'react-router';
-import MainPage from './pages/MainPage/MainPage';
+import {  createBrowserRouter } from 'react-router';
+// import MainPage from './pages/MainPage/MainPage';
 import HomePage from './pages/HomePage/HomePage';
 import MainLayout from './layouts/MainLayout';
-
+import CreatetripPage from './pages/CreatetripPage/CreatetripPage';
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +13,10 @@ export const router = createBrowserRouter([
       {
         index: true,      // Esta ruta es la "default" en "/"
         element: <HomePage />,
+      },
+      {
+        path:"/create-trip",
+        element: <CreatetripPage />,
       },
     ]
   },

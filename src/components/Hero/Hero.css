@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
 .Hero {
-  @apply bg-red-200;
+  @apply min-h-[30rem] flex flex-col items-center justify-center gap-[1.8rem] mt-[4rem];
+
+  p{
+    @apply text-center;
+  }
 }
+
