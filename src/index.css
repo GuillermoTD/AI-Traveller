@@ -14,3 +14,22 @@
 .btn-black {
   @apply text-white px-[2rem] py-[0.5rem] bg-slate-900 rounded-[5px] cursor-pointer;
 }
+
+.section-layout{
+  @apply w-[75%] min-h-[96vh];
+}
+
+.p-dropdown{
+  @apply border border-slate-300 py-[0.4rem] px-[0.4rem] rounded-sm;
+}
+
+.p-dropdown-items-wrapper{
+  @apply shadow-md mt-[0.2rem] bg-white;
+
+  li{
+    @apply outline-none hover:bg-slate-100 p-[0.2rem];
+  }
+
+
+}
+

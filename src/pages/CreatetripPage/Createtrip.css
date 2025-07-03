@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+.Createtrip{
+    @apply  flex flex-col  mt-[3rem];
+}
+
+.Createtrip_TopDescription{
+    @apply flex flex-col gap-[0.3rem];
+}
+
+
+.Createtrip_Content{
+    @apply mt-[3rem] flex flex-col gap-[2rem];
+
+    strong{
+        @apply font-semibold mb-[0.2rem];
+    }
+}
+
+

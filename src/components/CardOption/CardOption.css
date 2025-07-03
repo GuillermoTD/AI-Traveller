@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+
+
+.CardOption{
+    @apply p-4 border border-slate-300 cursor-pointer rounded-lg hover:shadow-lg duration-125 border-black w-full ;
+    
+    .icon{
+        @apply text-[30px];
+    }
+    strong{
+        @apply text-[1.12rem];
+    }
+}

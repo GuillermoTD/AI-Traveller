@@ -4,9 +4,12 @@ import { Children } from "react"
 
 const MainLayout = () => {
   return (
-    <div>
+    <div >
       <Navbar/>
+      <div className="flex flex-col items-center justify-center">
+
       <Outlet/>
+      </div>
     </div>
   )
 }

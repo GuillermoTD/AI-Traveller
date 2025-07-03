@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <div className="logo font-bold text-[1.5rem]">SmarTravel</div>
-      <Button className="btn-black" label="Sign Up" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+      <Button className="btn-black" label="Sign Up" onClick={() => setVisible(true)} />
       {
         visible ?
       (   <div className='bg-slate-900 w-full h-full z-100 absolute top-0 left-0 opacity-[40%]'>
