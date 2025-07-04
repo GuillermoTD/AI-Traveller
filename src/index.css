@@ -11,8 +11,8 @@
   --color1: #f56551;
 }
 
-.btn-black {
-  @apply text-white px-[2rem] py-[0.5rem] bg-slate-900 rounded-[5px] cursor-pointer;
+.btn-black{
+  @apply text-white px-[1.7rem] py-[0.5rem] bg-slate-900 rounded-[5px] cursor-pointer;
 }
 
 .section-layout{
@@ -21,6 +21,14 @@
 
 .p-dropdown{
   @apply border border-slate-300 py-[0.4rem] px-[0.4rem] rounded-sm;
+}
+
+.p-inputnumber{
+  @apply border border-slate-300 py-[0.4rem] px-[0.4rem] rounded-sm;
+
+  .p-inputnumber-input{
+    @apply outline-none
+  }
 }
 
 .p-dropdown-items-wrapper{

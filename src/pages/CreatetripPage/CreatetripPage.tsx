@@ -1,7 +1,8 @@
 import './Createtrip.css';
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dropdown} from 'primereact/dropdown';
 import CardOption from '../../components/CardOption/CardOption';
+import {InputNumber} from 'primereact/inputnumber';
 
 interface Country {
     name: string;
@@ -20,6 +21,9 @@ const CreatetripPage = () => {
       { name: 'Japan', code: 'JP' },
       { name: 'United States', code: 'US' }
   ];
+
+  const [value] = useState(0);
+
 
   // const selectedCountryTemplate = (option: Country, props) => {
   //     if (option) {
@@ -54,19 +58,14 @@ const CreatetripPage = () => {
       <div className="Createtrip_Content">
         <div>
           <strong>What is destination of choice?</strong>
-        <Dropdown value={selectedCountry} onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
+          <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
             className="w-[100%] md:w-14rem" />
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <strong>How many days are you planning your trip?</strong>
-        <Dropdown value={selectedCountry} onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
-                className="w-[100%] md:w-14rem" />
+          <InputNumber  min={0} value={value} showButtons />
         </div>
-
-
-        
-
 
 
         <div className='w-full'>
@@ -90,7 +89,7 @@ const CreatetripPage = () => {
           </div>
         </div>
     
-        <div>
+        <div className='w-full'>
           <strong>Who do you plan on traveling with on your next adventure?</strong>
           <div className='flex gap-[1rem] justify-between flex flex-wrap md:flex-nowrap'>
             <CardOption>
@@ -112,7 +111,9 @@ const CreatetripPage = () => {
         </div>
     
       </div>
-     
+      <div className="Createtrip_Button ">
+        <div className='btn-black Createtrip_Button__Btn'>Generate Trip</div>
+      </div>
     </div>
   )
 }
