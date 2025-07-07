@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Dropdown} from 'primereact/dropdown';
 import CardOption from '../../components/CardOption/CardOption';
 import {InputNumber} from 'primereact/inputnumber';
+import AIModel from '../../services/AIModel';
 
 interface Country {
     name: string;
@@ -34,11 +35,15 @@ const CreatetripPage = () => {
     setSelectedCountry(country)
   }
 
+  // AIModel("Generate Travel Plan for Location : Las Vegas for 3 Days for Couple with a Cheap budget ,Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place image url, Geo Coordinates, ticket Pricing, Time t travel each of the location for 3 days with each day plan with best time to visit in JSON format.");
+
+
   const budgetCardsInfo = [
     {icon:"💵", title:"Cheap", description:"Stay conscious of costs",},
     {icon:"💰", title:"Moderate", description:"Keep cost on the average side",},
     {icon:"💸", title:"Luxury", description:"Dont worry about cost",}
   ]
+
   const travelingMode  = [
     {icon:"✈️", title:"Just Me", description:"A sole traveles in exploration",},
     {icon:"🥂", title:"A Couple", description:"Two traveles in tandem",},
