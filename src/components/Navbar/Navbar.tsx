@@ -11,20 +11,28 @@ import type { User } from 'firebase/auth/cordova';
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
+
   let currentUser:User | null;
+  currentUser = useUserStore.getState().user
+
   const handleLogin = async()=>{
       await loginWithGoogle()
-      currentUser = useUserStore.getState().user
       console.log(currentUser);
   }
-
+ 
   return (
     <div className="Navbar">
       <div className="logo font-bold text-[1.5rem]">SmarTravel</div>
       {/* <Button className="btn-black" label="Sign Up" onClick={() => setVisible(true)} /> */}
-      {currentUser!.photoURL ?(
-        <img src={currentUser!.photoURL} alt="google image" />
-      ): null}
+      {currentUser?.photoURL ? (
+        <div className="Navbar_UseProfileImg"><img src={currentUser.photoURL} alt="google image" /></div>
+        
+        
+      ) : (
+        <Button className="btn-black" label="Sign Up" onClick={() => setVisible(true)} />
+      )}
+      
+
       {
         visible ?
       ( 
