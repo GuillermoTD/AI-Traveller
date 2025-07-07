@@ -11,6 +11,7 @@ interface Country {
 
 const CreatetripPage = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+
   const countries: Country[] = [
       { name: 'Australia', code: 'AU' },
       { name: 'Brazil', code: 'BR' },
@@ -24,29 +25,25 @@ const CreatetripPage = () => {
 
   const [value] = useState(0);
 
+  const [plannedDays,setplannedDays] = useState<number | null>(0);
 
-  // const selectedCountryTemplate = (option: Country, props) => {
-  //     if (option) {
-  //         return (
-  //             <div className="flex align-items-center">
-  //                 <img alt={option.name} src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px' }} />
-  //                 <div>{option.name}</div>
-  //             </div>
-  //         );
-  //     }
+  const [budget,setBudget] = useState<string>();
+  const [travelMode, setTravelMode] = useState<string>();
 
-  //     return <span>{props.placeholder}</span>;
-  // };
+  const handleSelectedCountry = (country:Country)=>{
+    setSelectedCountry(country)
+  }
 
-  // const countryOptionTemplate = (option: Country) => {
-  //     return (
-  //         <div className="flex align-items-center">
-  //             <img alt={option.name} src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`mr-2 flag flag-${option.code.toLowerCase()}`} style={{ width: '18px' }} />
-  //             <div>{option.name}</div>
-  //         </div>
-  //     );
-  // };
-
+  const budgetCardsInfo = [
+    {icon:"💵", title:"Cheap", description:"Stay conscious of costs",},
+    {icon:"💰", title:"Moderate", description:"Keep cost on the average side",},
+    {icon:"💸", title:"Luxury", description:"Dont worry about cost",}
+  ]
+  const travelingMode  = [
+    {icon:"✈️", title:"Just Me", description:"A sole traveles in exploration",},
+    {icon:"🥂", title:"A Couple", description:"Two traveles in tandem",},
+    {icon:"🏡", title:"Family", description:"A group of fun loving adv",}
+  ]
 
   return (
     <div className="section-layout Createtrip">
@@ -58,55 +55,43 @@ const CreatetripPage = () => {
       <div className="Createtrip_Content">
         <div>
           <strong>What is destination of choice?</strong>
-          <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
+          <Dropdown value={selectedCountry} onChange={(e) => handleSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
             className="w-[100%] md:w-14rem" />
         </div>
 
         <div className='flex flex-col'>
           <strong>How many days are you planning your trip?</strong>
-          <InputNumber  min={0} value={value} showButtons />
+          <InputNumber onChange={(e)=>setplannedDays(e.value)} min={0} value={value} showButtons />
         </div>
 
-
+        {/* first section */}
         <div className='w-full'>
           <strong>What is Your Budget?</strong>
           <div className='flex gap-[1rem] justify-between flex flex-wrap md:flex-nowrap'>
-            <CardOption>
-              <p className='icon'>💵</p>
-              <strong>Cheap</strong>
-              <p>Stay conscious of costs</p>
-            </CardOption>
-            <CardOption>
-              <p className='icon'>💰</p>
-              <strong>Moderate</strong>
-              <p>Keep cost on the average side</p>
-            </CardOption>
-            <CardOption>
-              <p className='icon'>💸</p>
-              <strong>Luxury</strong>
-              <p>Dont worry about cost</p>
-            </CardOption>
+            {budgetCardsInfo.map((e)=>{
+              return(
+                <CardOption onClick={()=> setBudget(e.title)}>
+                <p className='icon'>{e.icon}</p>
+                <strong>{e.title}</strong>
+                <p>{e.description}</p>
+              </CardOption>
+              )
+            })}
           </div>
         </div>
     
         <div className='w-full'>
           <strong>Who do you plan on traveling with on your next adventure?</strong>
           <div className='flex gap-[1rem] justify-between flex flex-wrap md:flex-nowrap'>
-            <CardOption>
-              <p className='icon'> ✈️</p>
-              <strong>Just Me</strong>
-              <p>A sole traveles in exploration</p>
-            </CardOption>
-            <CardOption>
-              <p className='icon'>🥂</p>
-              <strong>A Couple</strong>
-              <p>Two traveles in tandem</p>
-            </CardOption>
-            <CardOption>
-              <p className='icon'> 🏡</p>
-              <strong>Family</strong>
-              <p>A group of fun loving adv</p>
-            </CardOption>
+          {travelingMode.map((e)=>{
+              return(
+                <CardOption onClick={() => setTravelMode(e.title)}>
+                <p className='icon'>{e.icon}</p>
+                <strong>{e.title}</strong>
+                <p>{e.description}</p>
+              </CardOption>
+              )
+            })}
           </div>
         </div>
     
