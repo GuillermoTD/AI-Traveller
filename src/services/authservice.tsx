@@ -1,6 +1,6 @@
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import useUserStore from "../store/useUserStore";
+import {useUserStore} from "../store/Store";
 
 
 export const loginWithGoogle = async ()=>{

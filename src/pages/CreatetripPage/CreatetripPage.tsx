@@ -1,9 +1,12 @@
 import './Createtrip.css';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Dropdown} from 'primereact/dropdown';
 import CardOption from '../../components/CardOption/CardOption';
 import {InputNumber} from 'primereact/inputnumber';
 import AIModel from '../../services/AIModel';
+import { useNavigate } from 'react-router';
+import { Toast } from 'primereact/toast';
+import { useTripState } from '../../store/Store';
 
 interface Country {
     name: string;
@@ -11,8 +14,14 @@ interface Country {
 }
 
 const CreatetripPage = () => {
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-
+  const [selectedCountry, setSelectedCountry] = useState<string>();
+  const [value] = useState(0);
+  const [plannedDays,setplannedDays] = useState<number | null>(0);
+  const [budget,setBudget] = useState<string>();
+  const [travelMode, setTravelMode] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const toast = useRef<Toast>(null);
+  const { setTrip } = useTripState.getState();
   const countries: Country[] = [
       { name: 'Australia', code: 'AU' },
       { name: 'Brazil', code: 'BR' },
@@ -24,19 +33,20 @@ const CreatetripPage = () => {
       { name: 'United States', code: 'US' }
   ];
 
-  const [value] = useState(0);
+  const navigator = useNavigate();
 
-  const [plannedDays,setplannedDays] = useState<number | null>(0);
 
-  const [budget,setBudget] = useState<string>();
-  const [travelMode, setTravelMode] = useState<string>();
 
   const handleSelectedCountry = (country:Country)=>{
-    setSelectedCountry(country)
+    setSelectedCountry(country.name)
+    console.log(selectedCountry);
   }
 
-  // AIModel("Generate Travel Plan for Location : Las Vegas for 3 Days for Couple with a Cheap budget ,Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place image url, Geo Coordinates, ticket Pricing, Time t travel each of the location for 3 days with each day plan with best time to visit in JSON format.");
 
+  const promptString = `Generate Travel Plan for Location : ${selectedCountry} for ${plannedDays} Days for ${travelMode} with a ${budget}, Give me a Hotels options list with 
+                        HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName,
+                        Place Details, Place image url, Geo Coordinates, ticket Pricing, Time t travel each of the location for ${plannedDays} days with each day 
+                        plan with best time to visit in JSON format. Give me a string that i can easily stringyfy in javascript`
 
   const budgetCardsInfo = [
     {icon:"💵", title:"Cheap", description:"Stay conscious of costs",},
@@ -50,9 +60,32 @@ const CreatetripPage = () => {
     {icon:"🏡", title:"Family", description:"A group of fun loving adv",}
   ]
 
+const handleAIConsult = async()=>{
+  if(plannedDays == 0 && budget == "" && travelMode == ""){
+    showError("All options should be selected")
+  }
+  try {
+    setIsLoading(true)
+    const response = await AIModel(promptString);
+    setIsLoading(false);
+    console.log("ESTO SE SUPONE QUE FUNCIONA")
+    console.log(response)
+    setTrip(response);
+    navigator('/trip-details');
+  } catch (error) {
+    console.log("the request was not successed");
+  }
+}
+
+  const showError = (message:string):void => {
+    toast.current?.show({severity:'error', summary: 'Error', detail:message, life: 3000});
+}
+
   return (
-    <div className="section-layout Createtrip">
-      <div className="Createtrip_TopDescription">
+    <>
+    {isLoading ? (<div>Cargando...</div>) : (
+      <form className="section-layout Createtrip">
+          <div className="Createtrip_TopDescription">
         <p className='text-[1.5rem] font-bold'>Tell us your travel preferences 🏕️🌴</p>
         <p className='text-slate-800'>Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
         </p>
@@ -60,8 +93,9 @@ const CreatetripPage = () => {
       <div className="Createtrip_Content">
         <div>
           <strong>What is destination of choice?</strong>
-          <Dropdown value={selectedCountry} onChange={(e) => handleSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
+          <Dropdown value={selectedCountry} onChange={(e) =>  handleSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country" 
             className="w-[100%] md:w-14rem" />
+            
         </div>
 
         <div className='flex flex-col'>
@@ -102,9 +136,14 @@ const CreatetripPage = () => {
     
       </div>
       <div className="Createtrip_Button ">
-        <div className='btn-black Createtrip_Button__Btn'>Generate Trip</div>
+        <div className='btn-black Createtrip_Button__Btn' onClick={()=>handleAIConsult()}>Generate Trip</div>
       </div>
-    </div>
+      <Toast ref={toast} />
+      </form>
+    )}
+
+   
+  </>
   )
 }
 

@@ -3,7 +3,7 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { useState } from 'react';
 import {loginWithGoogle} from "../../services/authservice";
-import useUserStore from "../../store/useUserStore";
+import {useUserStore} from "../../store/Store";
 import type { User } from 'firebase/auth/cordova';
 
 
