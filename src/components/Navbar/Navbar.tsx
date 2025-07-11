@@ -16,8 +16,8 @@ const Navbar = () => {
   currentUser = useUserStore.getState().user
 
   const handleLogin = async()=>{
-      await loginWithGoogle()
-      console.log(currentUser);
+      const user = await loginWithGoogle()
+      console.log(user);
   }
  
   return (

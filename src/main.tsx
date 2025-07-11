@@ -7,6 +7,7 @@ import {router} from "./router.tsx"
 import "primereact/resources/primereact.min.css"; // estilos base de PrimeReact
 import "primeicons/primeicons.css";
 
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />

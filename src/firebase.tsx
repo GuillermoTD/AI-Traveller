@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore} from "firebase/firestore"
+import { doc, setDoc } from "firebase/firestore"; 
+
 const firebaseConfig = {
   apiKey: "AIzaSyDfkpdQoleMVMH52HffLcO9-SSZ7sn0kw4",
   authDomain: "ai-traveller-c4415.firebaseapp.com",
@@ -20,5 +22,19 @@ const provider = new GoogleAuthProvider(); //provider para usar servicio se goog
 
 const Db = getFirestore(app);
 
+// Add a new document in collection "cities"
+const SaveAITrip = async (formData: any,tripData: any,email:string) => {
+  const docid = Date.now().toString()
+  await setDoc(doc(Db, "trips", docid), {
+    id:docid,
+    userSelection: formData,
+    tripData: tripData,
+    userEmail: email,
+  });
+}
 
-export { auth, provider, Db };
+export { auth, provider, Db, SaveAITrip };
+
+
+
+
