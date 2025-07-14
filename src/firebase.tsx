@@ -23,14 +23,19 @@ const provider = new GoogleAuthProvider(); //provider para usar servicio se goog
 const Db = getFirestore(app);
 
 // Add a new document in collection "cities"
-const SaveAITrip = async (formData: any,tripData: any,email:string) => {
+const SaveAITrip = async (formData: any,tripData: any,email:string, userUid:string) => {
   const docid = Date.now().toString()
-  await setDoc(doc(Db, "trips", docid), {
+
+  const tripSaved = await setDoc(doc(Db, "trips", docid), {
     id:docid,
     userSelection: formData,
     tripData: tripData,
     userEmail: email,
+    ownerId: userUid,
   });
+
+  console.log(tripSaved)
+  console.log("este es el uid" + userUid)
 }
 
 export { auth, provider, Db, SaveAITrip };

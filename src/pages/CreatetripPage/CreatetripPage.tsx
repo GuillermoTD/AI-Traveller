@@ -1,5 +1,5 @@
 import './Createtrip.css';
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import { Dropdown } from 'primereact/dropdown';
 import CardOption from '../../components/CardOption/CardOption';
 import { InputNumber } from 'primereact/inputnumber';
@@ -15,7 +15,7 @@ interface Country {
 }
 
 const CreatetripPage = () => {
-  const [selectedCountry, setSelectedCountry] = useState<string>();
+  const [selectedCountry, setSelectedCountry] = useState<Country>();
   const [value] = useState(0);
   const [plannedDays, setplannedDays] = useState<number | null>(0);
   const [budget, setBudget] = useState<string>();
@@ -23,6 +23,10 @@ const CreatetripPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setTrip } = useTripState.getState();
   const navigator = useNavigate();
+  const isSelected = (selectedValue: string | undefined, title: string): boolean => {
+    return selectedValue === title;
+  };
+  
 
   const notify = (message:string) => toast.error(message, {
     position: 'bottom-right',
@@ -41,11 +45,6 @@ const CreatetripPage = () => {
     { name: 'United States', code: 'US' }
   ];
 
-
-  const handleSelectedCountry = (country: Country) => {
-    setSelectedCountry(country.name)
-    console.log(selectedCountry);
-  }
 
   const promptString = `Generate Travel Plan for Location : ${selectedCountry} for ${plannedDays} Days for ${travelMode} with a ${budget}, Give me a Hotels options list with 
                         HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName,
@@ -92,22 +91,29 @@ const CreatetripPage = () => {
 
     try {
       setIsLoading(true)
+      document.body.classList.add("overflow-y-hidden","relative");
       const response = await AIModel(promptString);
       setIsLoading(false);
+      document.body.classList.remove("overflow-y-hidden");
       setTrip(response);
       console.log(response)
-      SaveAITrip(optionSelectedData, response, UserData?.email)
+      SaveAITrip(optionSelectedData, response, UserData?.email, UserData.uid)
+  
       navigator('/trip-details');
     } catch (error) {
       console.log("the request was not successed");
     }
   }
 
- 
   return (
     <>
-      {isLoading ? (<div>Cargando...</div>) : (
-        <form className="section-layout Createtrip">
+        <form className="section-layout Createtrip ">
+          {
+            isLoading ? ( <div className="Createtrip_Loader">
+            <div className="Loader"></div>
+          </div>) : null
+          }
+         
           <div className="Createtrip_TopDescription">
             <p className='text-[1.5rem] font-bold'>Tell us your travel preferences 🏕️🌴</p>
             <p className='text-slate-800'>Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
@@ -116,7 +122,7 @@ const CreatetripPage = () => {
           <div className="Createtrip_Content">
             <div>
               <strong>What is destination of choice?</strong>
-              <Dropdown value={selectedCountry} onChange={(e) => handleSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
+              <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
                 className="w-[100%] md:w-14rem" />
             </div>
 
@@ -130,8 +136,13 @@ const CreatetripPage = () => {
               <strong>What is Your Budget?</strong>
               <div className='flex gap-[1rem] justify-between flex flex-wrap md:flex-nowrap'>
                 {budgetCardsInfo.map((e) => {
+                  
                   return (
-                    <CardOption onClick={() => setBudget(e.title)}>
+                    <CardOption key={e.title} isSelected={isSelected(budget,e.title)} onClick={
+                      () => {
+                        setBudget(e.title)
+                      }
+                      }>
                       <p className='icon'>{e.icon}</p>
                       <strong>{e.title}</strong>
                       <p>{e.description}</p>
@@ -146,7 +157,7 @@ const CreatetripPage = () => {
               <div className='flex gap-[1rem] justify-between flex flex-wrap md:flex-nowrap'>
                 {travelingMode.map((e) => {
                   return (
-                    <CardOption onClick={() => setTravelMode(e.title)}>
+                    <CardOption key={e.title} isSelected={isSelected(travelMode,e.title)} onClick={() => setTravelMode(e.title)}>
                       <p className='icon'>{e.icon}</p>
                       <strong>{e.title}</strong>
                       <p>{e.description}</p>
@@ -162,7 +173,7 @@ const CreatetripPage = () => {
           </div>
           <ToastContainer />
         </form>
-      )}
+      
 
 
     </>

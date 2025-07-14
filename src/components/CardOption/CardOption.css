@@ -12,3 +12,7 @@
         @apply text-[1.12rem];
     }
 }
+
+.borderedOption{
+    @apply border-[0.12rem] border-slate-400;
+}

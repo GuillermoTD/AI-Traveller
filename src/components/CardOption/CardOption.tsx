@@ -5,12 +5,13 @@ import "./CardOption.css";
 interface CardOptionsProps{
   onClick?: ()=> void,
   children?: ReactNode,
+  isSelected:boolean
 }      
 
 
-const CardOption = ({children, onClick}:CardOptionsProps) => {
+const CardOption = ({children, onClick,isSelected}:CardOptionsProps) => {
   return (
-    <div className="CardOption" onClick={onClick}>
+    <div className={`CardOption ${isSelected ? "borderedOption": ""}`} onClick={onClick}>
         {children}
     </div>
   )
