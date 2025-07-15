@@ -21,3 +21,8 @@ export const loginWithGoogle = async () => {
         throw error;
     }
 }
+
+
+export const isUserLoggedVerification = ():boolean=>{
+    return false;
+}
