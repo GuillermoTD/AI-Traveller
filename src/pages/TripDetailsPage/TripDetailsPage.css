@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+.TripDetailstrip{
+    @apply  flex flex-col  mt-[3rem] gap-[3rem];
+}
+
+.TripDetails_Hero__Image{
+    @apply w-full h-[25rem] overflow-hidden rounded-lg mt-[2rem] mb-[1rem];
+
+    img{
+        @apply w-full h-full object-cover;
+    }
+}
+
+
+.TripDetails_Hero__Description{
+    @apply flex flex-col gap-[1rem];
+}
+
+
+.badge{
+    @apply bg-slate-200 p-[0.5rem] rounded-3xl flex items-center justify-center text-[0.8rem] font-semibold text-slate-500;
+}

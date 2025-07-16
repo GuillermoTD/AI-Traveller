@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+
+
+
+.CardHotelRecomendation{
+    @apply flex flex-col gap-[1rem] w-full md:w-[30%] bg-white rounded-lg p-[1rem] shadow-md mt-[2rem] h-[18rem];
+
+    .CardHotelRecomendation__Image{
+        @apply w-full h-[10rem] overflow-hidden rounded-lg;
+
+        img{
+            @apply w-full h-full object-cover;
+        }
+    }
+
+    .CardHotelRecomendation__Details{
+        @apply flex flex-col gap-[0.5rem];
+
+        .CardHotelRecomendation__Name{
+            @apply text-lg font-semibold text-slate-800;
+        }
+
+        .CardHotelRecomendation__Price{
+            @apply text-sm text-slate-600;
+        }
+    }
+}
