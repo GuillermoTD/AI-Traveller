@@ -4,13 +4,24 @@ import CardHotelRecomendation from "../../components/CardHotelRecomendation/Card
 
 const TripDetailsPage = () => {
   const trip = useTripState((state) => state.trip);
-  console.log(trip);
+  localStorage.setItem("trip", JSON.stringify(trip));
+  const tripString = localStorage.getItem("trip");
+  const tripdata = () => {
+    if (trip == null) {
+      return tripString ? JSON.parse(tripString) : null;
+    }
+    return trip;
+  };
+  // const trip = tripdata ? JSON.parse(tripdata) : null;
+  console.log(tripdata);
+  // const tripData = localStorage.getItem("trip");
+  // const trip = tripData ? JSON.parse(tripData) : null;
 
   return (
     <div className="TripDetails section-layout">
       <div className="TripDetails_Hero">
         <div className="TripDetails_Hero__Image">
-          <img src={trip.countryImage} alt="img-hero" />
+          <img src={trip?.countryImage} alt="img-hero" />
         </div>
 
         <div className="TripDetails_Hero__Description">
@@ -26,25 +37,37 @@ const TripDetailsPage = () => {
         </div>
       </div>
       <div className="flex gap-[1rem] justify-between flex-wrap md:flex-nowrap">
-        {/* {trip.itinerary.map((e,index) => {
+        {tripdata()?.hotelOptions?.map((e: any, index: number) => {
           return (
             <CardHotelRecomendation key={index}>
               <div className="CardHotelRecomendation__Image">
-                <img
-                  src={e.hotelOptions[0].hotelImageUrl}
-                  alt="hotel-option"
-                />
+                <img src={e?.hotelImageUrl} alt="hotel-option" />
               </div>
               <div className="CardHotelRecomendation__Details">
-                <strong>{trip.hotelOptions[0].name}</strong>
-                <p>{trip.hotelOptions[0].address}</p>
-                <p>Price: {trip.hotelOptions[0].Price}</p>
-                <p>Rating: {trip.hotelOptions[0].rating}</p>
-                <p>{trip.hotelOptions[0].description}</p>
+                <strong>{e?.name}</strong>
+                <p>{e?.address}</p>
+                <p>Price: {e?.Price}</p>
+                <p>Rating: {e?.rating}</p>
+                <p>{e?.description}</p>
               </div>
             </CardHotelRecomendation>
           );
-        })} */}
+        })}
+      </div>
+      <div>Places to Visit</div>
+
+      <div className="TripDetails_DaysOptions">
+        {tripdata()?.itinerary?.map((dayItem: any, index: number) => {
+          return (
+            <div key={index}>
+              <span>
+                <strong>{dayItem?.day}</strong>
+                hola
+              </span>
+              <div className="flex gap-[1rem] justify-between flex-wrap md:flex-nowrap"></div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
