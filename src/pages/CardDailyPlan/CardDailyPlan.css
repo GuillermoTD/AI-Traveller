@@ -1,0 +1,5 @@
+@import 'tailwind';
+
+.CardDailyPlan{
+    @apply w-[20rem] h-[10rem] bg-red-500;
+}

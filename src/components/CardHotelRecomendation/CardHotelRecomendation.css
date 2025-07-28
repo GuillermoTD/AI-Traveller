@@ -4,15 +4,7 @@
 
 
 .CardHotelRecomendation{
-    @apply flex flex-col gap-[1rem] w-full md:w-[30%] bg-white rounded-lg p-[1rem] shadow-md mt-[2rem] h-[18rem];
-
-    .CardHotelRecomendation__Image{
-        @apply w-full h-[10rem] overflow-hidden rounded-lg;
-
-        img{
-            @apply w-full h-full object-cover;
-        }
-    }
+    @apply flex flex-col gap-[1rem] w-full md:w-[30%] bg-white rounded-lg p-[1rem] shadow-md mt-[2rem] h-[25rem];
 
     .CardHotelRecomendation__Details{
         @apply flex flex-col gap-[0.5rem];

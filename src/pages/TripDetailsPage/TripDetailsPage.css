@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .TripDetailstrip{
-    @apply  flex flex-col  mt-[3rem] gap-[3rem];
+        @apply  flex flex-col  mt-[3rem] gap-[3rem];
 }
 
 .TripDetails_Hero__Image{
@@ -20,4 +20,12 @@
 
 .badge{
     @apply bg-slate-200 p-[0.5rem] rounded-3xl flex items-center justify-center text-[0.8rem] font-semibold text-slate-500;
+}
+
+.CardHotelRecomendation__Image{
+    @apply border-[0.1rem] border-red-500 w-full h-[40%];
+
+    img{
+        @apply w-full h-full object-cover;
+    }
 }
